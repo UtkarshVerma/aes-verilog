@@ -6,6 +6,9 @@ VERBOSE   ?= 0
 VERILATOR ?= verilator
 VERILATOR_FLAGS += --Mdir $(BUILD_DIR)
 
+TEST_SRCS = $(wildcard $(TEST_DIR)/*.cpp)
+TEST_BINS = $(patsubst $(TEST_DIR)/%.cpp,$(BUILD_DIR)/%,$(TEST_SRCS))
+
 # Prettify output
 PRINTF := @printf "%-8s %s\n"
 ifeq ($(VERBOSE), 0)
@@ -14,8 +17,8 @@ endif
 
 all: test
 
-test: $(BUILD_DIR)/mix_column
-	$Q./$<
+test: $(TEST_BINS)
+	$Qfor bin in $(TEST_BINS); do printf "%s: " "$$bin"; ./$$bin; done
 
 $(BUILD_DIR)/%: $(SRC_DIR)/%.v $(TEST_DIR)/%.cpp
 	$Qmkdir -p $(@D)
