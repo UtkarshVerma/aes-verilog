@@ -5,11 +5,7 @@
 #include <iostream>
 
 #include "Vmix_column.h"
-
-template <typename T, size_t N>
-constexpr size_t size(T (&)[N]) {
-    return N;
-}
+#include "util.hpp"
 
 #define TEST_VECTOR(vector, expected) \
     test_vector(*dut, vector, expected, size(vector), __FILE__, __LINE__)

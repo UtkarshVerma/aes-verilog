@@ -4,7 +4,7 @@ TEST_DIR  ?= test
 VERBOSE   ?= 0
 
 VERILATOR ?= verilator
-VERILATOR_FLAGS += --Mdir $(BUILD_DIR)
+VERILATOR_FLAGS += --Mdir $(BUILD_DIR) -I$(SRC_DIR)
 
 TEST_SRCS = $(wildcard $(TEST_DIR)/*.cpp)
 TEST_BINS = $(patsubst $(TEST_DIR)/%.cpp,$(BUILD_DIR)/%,$(TEST_SRCS))
@@ -18,13 +18,13 @@ endif
 all: test
 
 test: $(TEST_BINS)
-	$Qfor bin in $(TEST_BINS); do printf "%s: " "$$bin"; ./$$bin; done
+	$Qfor bin in $^; do printf "$(TEST_DIR)/%s: " "$$(basename $$bin)"; ./$$bin; done
 
 $(BUILD_DIR)/%: $(SRC_DIR)/%.v $(TEST_DIR)/%.cpp
 	$Qmkdir -p $(@D)
 	$(PRINTF) "VERILATE" $@
-	$Q$(VERILATOR) $(VERILATOR_FLAGS) --cc $< --exe $(word 2,$^) --build \
-		-o $(@F)
+	$Q$(VERILATOR) $(VERILATOR_FLAGS) --top-module $(@F) --cc $< \
+		--exe $(word 2,$^) --build -o $(@F)
 
 clean:
 	$(PRINTF) "CLEAN" $(BUILD_DIR)
