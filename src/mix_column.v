@@ -28,6 +28,7 @@ module mix_column #(
     end
   endgenerate
 
+  // TODO: Hardcoded.
   assign column_out[0] = b[0] ^ c[1] ^ a[2] ^ a[3];
   assign column_out[1] = a[0] ^ b[1] ^ c[2] ^ a[3];
   assign column_out[2] = a[0] ^ a[1] ^ b[2] ^ c[3];

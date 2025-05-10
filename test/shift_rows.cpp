@@ -24,7 +24,7 @@ int main(const int argc, char **argv) {
     // Apply input.
     for (unsigned int i = 0; i < 4; ++i) {
         for (unsigned int j = 0; j < 4; ++j) {
-            dut->bytes_in[i][j] = input[i][j];
+            dut->state_in[i][j] = input[i][j];
         }
     }
 
@@ -34,7 +34,7 @@ int main(const int argc, char **argv) {
     // Check output.
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 4; ++j) {
-            uint8_t actual = dut->bytes_out[i][j];
+            uint8_t actual = dut->state_out[i][j];
             uint8_t expect = expected[i][j];
             assert(actual == expect && "Mismatch in ShiftRows output");
         }

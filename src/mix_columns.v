@@ -1,9 +1,11 @@
+`include "mix_column"
+
 // https://en.wikipedia.org/wiki/Rijndael_MixColumns
 module mix_columns #(
     parameter int N = 4
 ) (
-    input  [7:0] column_in [N][N],
-    output [7:0] column_out[N][N]
+    input  [7:0] state_in [N][N],
+    output [7:0] state_out[N][N]
 );
   genvar i;
   generate
@@ -11,8 +13,8 @@ module mix_columns #(
       mix_column #(
           .N(N)
       ) mc (
-          .column_in (column_in[i]),
-          .column_out(column_out[i])
+          .column_in (state_in[i]),
+          .column_out(state_out[i])
       );
     end
   endgenerate

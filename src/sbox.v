@@ -1,3 +1,6 @@
+`ifndef SBOX_V
+`define SBOX_V
+
 module sbox (
     input [7:0] byte_in,
     output reg [7:0] byte_out
@@ -263,3 +266,5 @@ module sbox (
     endcase
   end
 endmodule
+
+`endif

@@ -18,7 +18,8 @@ endif
 all: test
 
 test: $(TEST_BINS)
-	$Qfor bin in $^; do printf "$(TEST_DIR)/%s: " "$$(basename $$bin)"; ./$$bin; done
+	$(PRINTF) "TEST"
+	$Qfor bin in $^; do printf "\t%-30s: " "$(TEST_DIR)/$$(basename $$bin)"; ./$$bin; done
 
 $(BUILD_DIR)/%: $(SRC_DIR)/%.v $(TEST_DIR)/%.cpp
 	$Qmkdir -p $(@D)
